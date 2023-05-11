@@ -5,7 +5,7 @@ import './ShelfPage.css';
 
 function ShelfPage() {
   const [shelfList, setShelfList] = useState([]);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   useEffect(() => {
     fetchShelf();
@@ -20,6 +20,15 @@ function ShelfPage() {
     });
   }
   
+  const removeItem = (id) => {
+    axios.delete(`/api/shelf/${id}`).then((response) => {
+      fetchShelf();
+    }).catch((error) => {
+      console.log(error);
+      alert('Something went wrong.');
+    });
+  }
+
   // const handleChange = (event) => {
   //   event.preventDefault();
   //   const action = { name: event.target.value};
@@ -59,7 +68,7 @@ function ShelfPage() {
                         <br />
                         <div className="desc">{item.description}</div>
                         <div style={{textAlign: 'center', padding: '5px'}}>
-                          <button style={{cursor: 'pointer'}}>Delete</button>
+                          <button style={{cursor: 'pointer'}} onClick={() => removeItem(item.id)}>Delete</button>
                         </div>
                     </div>
                  </div>
